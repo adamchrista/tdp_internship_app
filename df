@@ -1,0 +1,29 @@
+[33mcommit 091597b949572c7feea80433631c9b1a71562b51[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: CHRISTA <ac186f@att.com>
+Commit: CHRISTA <ac186f@att.com>
+
+    Adding backend folder and frontend folder
+
+[33mcommit 57c14866bfab1a1aa931b08e523ea87df10f0864[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Thakkar, Jagat (jt2608) <jt2608@us.att.com>
+Commit: Thakkar, Jagat (jt2608) <jt2608@us.att.com>
+
+    Added the navbar
+
+[33mcommit db3a90d173cdd20319e248525632aaba9db31693[m[33m ([m[1;31morigin/navbar[m[33m)[m
+Author: Thakkar, Jagat (jt2608) <jt2608@us.att.com>
+Commit: Thakkar, Jagat (jt2608) <jt2608@us.att.com>
+
+    Configured all required settings
+
+[33mcommit a0f8613618ae795ed7cc898643aa249e04b45e5e[m
+Author: Thakkar, Jagat (jt2608) <jt2608@us.att.com>
+Commit: Thakkar, Jagat (jt2608) <jt2608@us.att.com>
+
+    Using Ashley Isles' (ai8993) starter pack of trailwind-css-starter off of: https://codecloud.web.att.com/users/ai8993/repos/tailwind-css-starter/browse
+
+[33mcommit 910a3865b01c63d0016f6dda22063a9d1122b6ad[m
+Author: Thakkar, Jagat (jt2608) <jt2608@us.att.com>
+Commit: Thakkar, Jagat (jt2608) <jt2608@us.att.com>
+
+    First Commit - test
