@@ -1,0 +1,44 @@
+Instructions on how to set up this backend (this assumes you have pulled all of the backend code)
+
+**Please don't hesitate to ask me questions, I am probably going to forget something 
+
+1. Make sure you have Git Bash installed on localhost
+
+2. Download MongoDB: 
+-Go to https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/    to follow the instructions on
+downloading mongodb for Windows. 
+-Once installed, run the command "C:\Program Files\MongoDB\Server\4.2\bin\mongo.exe" (includes the quotes) 
+on the Git Bash command line,you should get a result that doesn't look like an error message and 
+includes something like "Mongo Shell Version 4.x.x"
+-type: "use team-y-nots" (without the quotes). The response should be something like "now using db team-y-nots"
+-type: "exit" (no quotes) this should log you out of MongoDB
+
+3. Installing necessary python modules (do this in Git Bash):
+$ pip install networkx $ pip install python-louvain $ pip install pymongo
+
+4. Populating the database with some data:
+-make sure you have the files "populate_a_database.py" and "graph_1.kml" in the same directory
+-use command "pwd" to find current path that your files are in
+-modify the "populate_a_database.py" file using a text editor of choice. Modify line 10 to the directory path of 
+graph_1.kml 
+-my line 10 is:  f = open("/Users/ac186f/Documents/graph_1.kml", "r")
+-run the command $ python populate_a_database.py
+-the response should be a bunch of Object IDs and no error messages
+-copy one of the object IDs for later use (should be a long string of 15 ish characters)
+
+5. Initiating the Back-End Project
+-Go to the backend folder of the project (preferably in Visual Studio Code terminal)
+-$ npm install express body-parser cors mongoose
+-$ npm install -g nodemon
+-$ nodemon server
+-The final command should successfully start up the backend server
+
+6. Going to the backend site
+-go to an internet browser and go to http://localhost:4000/team-y-nots/(the id of the object you copied down)
+-Ex: http://localhost:4000/team-y-nots/5f0345dd503faee41cd10d24  (this won't work for you since all IDs are different
+-The result should be a page that has a good amount of data on it. Congrats you've got all the data we need for
+our project!!
+
+
+
+
