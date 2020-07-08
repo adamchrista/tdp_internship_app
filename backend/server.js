@@ -31,7 +31,14 @@ databaseRoutes.route('/').get(function(req, res) {
     });
 });
 
-databaseRoutes.route('/:id').get(function(req, res) {
+databaseRoutes.route('/profile/:id').get(function(req, res) {
+    let id = req.params.id;
+    Person.findById(id, function(err, person) {
+        res.json(person);
+    })
+})
+
+databaseRoutes.route('/home/:id').get(function(req, res) {
 
     let id = req.params.id;
 
