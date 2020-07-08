@@ -1,6 +1,6 @@
 import React from "react";
 
-export class Status extends React.Component{
+export class Home extends React.Component{
     render(){
         return(
             <div class="space-y-6">
