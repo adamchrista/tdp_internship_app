@@ -5,6 +5,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const databaseRoutes = express.Router();
 const spawn = require("child_process").spawn;
+const bcrypt = require('bcryptjs')
 const PORT = 4000;
 
 let Person = require('./person.model');
@@ -19,6 +20,45 @@ const connection = mongoose.connection;
 connection.once('open', function() {
     console.log("MongoDB database connection established successfully");
 })
+
+databaseRoutes.route('/login').post(function(req, res) {
+    Person.findOne({company_id: req.body.company_id})
+        .then(person => {
+            
+            if (!person) res.sendStatus(204);
+            else {
+                bcrypt.compare(req.body.password, person.password)
+                    .then(passwordMatch => passwordMatch ? res.sendStatus(200) : res.sendStatus(204))
+            }
+        });
+});
+
+databaseRoutes.route('/login/grabId').post(function(req, res) {
+    Person.findOne({company_id: req.body.company_id})
+    .then(person => {
+        
+        if (!person) res.sendStatus(204);
+        else {
+            res.send(person._id);
+        }
+    });
+});
+
+databaseRoutes.route('/validate').post(function(req, res) {
+    Person.findOne({company_id: req.body.company_id})
+        .then(person => person ? res.sendStatus(204) : res.sendStatus(200))
+});
+
+databaseRoutes.route('/register').post(function(req, res) {
+    let register = new Person(req.body);
+    register.save()
+        .then(reg => {
+            res.sendStatus(200);
+        })
+        .catch(err => {
+            res.status(400).send("Failed to store in database!!")
+        });
+});
 
 databaseRoutes.route('/').get(function(req, res) {
     Person.find(function(err, persons) {
@@ -43,8 +83,8 @@ databaseRoutes.route('/home/:id').get(function(req, res) {
     let id = req.params.id;
 
     Person.findById(id, function(err, person) {
-            console.log(person);
-            
+            //console.log(person);
+            console.log(id);
             var middleJSON = JSON.stringify(person);
             middleJSON = JSON.parse(middleJSON);
             var company_id = middleJSON['company_id'].toString();
@@ -133,7 +173,8 @@ databaseRoutes.route('/home/:id').get(function(req, res) {
             splitNetworkAndCommunityData[5] = parseFloat(splitNetworkAndCommunityData[5]);
             
             graph["full_network_and_community_data"] = graph["full_network_and_community_data"].concat(splitNetworkAndCommunityData);
-        
+            console.log(edges);
+            console.log(nodes);
 
             res.send(graph);
         

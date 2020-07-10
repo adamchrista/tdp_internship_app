@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigation } from "./components/Navigation"
-import { Home } from "./components/Home"
+import  Home  from "./components/Home"
 import { Profile } from "./components/Profile"
 import { About } from "./components/About"
 import { Login } from "./components/Login"
@@ -14,7 +14,7 @@ function App() {
         <Navigation/>
         <Switch>
           <Route path ="/" exact component={Login}/>
-          <Route path ="/home/5f060537a57910cc2f6a5b7d" component={Home}/>
+          <Route path ="/home/:id" component={Home}/>
           <Route path ="/about" component={About}/>
           <Route path ="/profile" component={Profile}/>
         </Switch>

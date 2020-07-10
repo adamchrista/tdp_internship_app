@@ -8,6 +8,9 @@ let Person = new Schema({
     first_name: {
         type: String
     },
+    password: {
+        type: String
+    },
     last_name: {
         type: String
     },
