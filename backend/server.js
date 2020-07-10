@@ -133,10 +133,10 @@ databaseRoutes.route('/home/:id').get(function(req, res) {
               var edgeOne = splitEdgeData[i].slice(2, -1);
               var edgeTwo = splitEdgeData[i+1].slice(2, -1);
 
-              if (i + 1 == splitEdgeData.length - 1)
+              /*if (i + 1 == splitEdgeData.length - 1)
               {
                   edgeTwo = splitEdgeData[i+1].slice(2, -2);
-              }
+              }*/
 
                var edge = {"source": edgeOne, "target": edgeTwo};
                edges.push(edge);

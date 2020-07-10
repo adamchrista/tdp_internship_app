@@ -11,8 +11,8 @@ export default class Home extends Component {
         this.state = {
           nodes: [],
           edges: [],
-          list_of_colors: []
-          //network_and_community_data:[]
+          list_of_colors: [],
+          network_and_community_data:[]
           
         };
       }
@@ -26,8 +26,8 @@ export default class Home extends Component {
               this.setState({
                 nodes: response.data.nodes,
                 edges: response.data.edges,
-                list_of_colors: response.data.list_of_colors      
-                //network_and_community_data: response.data.full_network_and_community_data
+                list_of_colors: response.data.list_of_colors,      
+                network_and_community_data: response.data.full_network_and_community_data
               })
             })
             .catch(function (error){
@@ -41,14 +41,15 @@ export default class Home extends Component {
 
 
 
-        const {nodes, edges, list_of_colors} = this.state;
+        const {nodes, edges, list_of_colors, network_and_community_data} = this.state;
         const endingNodes = nodes.slice(1);
         const startingNode = nodes.slice(0,1);
-        const newEdges = edges.slice(0, edges.length-1);//
+        
 
         const myStyle = {
-          position: "relative",
-          left: '100px'
+          position: "absolute",
+          left: '500px',
+          top: '90px'
         }
 
 
@@ -57,28 +58,37 @@ export default class Home extends Component {
           
             <div class="space-y-6">
             
-            <div className="rounded-md shadow-lg w-1/4 bg-white">
-                <div className="p-8">
-                    <h3 className="font-bold text-2xl mb-2">Number of People in Community</h3>
+            <div className="rounded-md shadow-lg w-1/3 bg-white">
+                <div className="p-4">
+                  <h3 className="font-bold text-2xl mb-2">Risk In Network: {network_and_community_data[6]}%</h3>
+                  <h3 className="text-2x1 mb-2">({network_and_community_data[1]} out of {network_and_community_data[0]} diagnosed with COVID-19)</h3>
                 </div>
             </div>
 
-            <div className="rounded-md shadow-lg w-1/4 bg-white">
-                <div className="p-8">
-                    <h3 className="font-bold text-2xl mb-2">_ out _ have been diagnosed</h3>
+            <div className="rounded-md shadow-lg w-1/3 bg-white">
+                <div className="p-4">
+                   <h3 className="font-bold text-2xl mb-2">Immunity In Network: {network_and_community_data[7]}%</h3>
+                    <h3 className="text-2x1 mb-2">({network_and_community_data[2]} out of {network_and_community_data[0]} immune to COVID-19)</h3>
                 </div>
             </div>
 
-            <div className="rounded-md shadow-lg w-1/4 bg-white">
-                <div className="p-8">
-                    <h3 className="font-bold text-2xl mb-2">Number of people in your network</h3>
+            <div className="rounded-md shadow-lg w-1/3 bg-white">
+                <div className="p-4">
+                  <h3 className="font-bold text-2xl mb-2">Risk In Community: {network_and_community_data[8]}%</h3>
+                  <h3 className="text-2x1 mb-2">({network_and_community_data[4]} out of {network_and_community_data[3]} diagnosed with COVID-19)</h3>
                 </div>
-            </div> 
+            </div>
+            <div className="rounded-md shadow-lg w-1/3 bg-white">
+                <div className="p-4">
+                  <h3 className="font-bold text-2xl mb-2">Immunity in Community: {network_and_community_data[9]}%</h3>
+                  <h3 className="text-2x1 mb-2">({network_and_community_data[5]} out of {network_and_community_data[3]} immune to COVID-19)</h3>
+                </div>
+            </div>  
                   <h style={myStyle}>
                     <InteractiveForceGraph
                     labelAttr="label"
                     zoom
-                    simulationOptions={{height: 800, width: 800, animate: true, strength: {collide: 0.1} }}
+                    simulationOptions={{height: 500, width: 700, animate: true, strength: {collide: 0.05} }}
                     zoomOptions={{minScale: 0.25, maxScale: 5}}
                     highlightDependencies>
                  
@@ -111,7 +121,7 @@ export default class Home extends Component {
                     />
                     ))}
 
-                    {newEdges.map(({ source, target }) => (
+                    {edges.map(({ source, target }) => (
                     <ForceGraphLink
                        key={source + target}
                        link={{ source, target, value: 1 }}
