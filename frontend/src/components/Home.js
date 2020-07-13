@@ -1,6 +1,19 @@
 import React, { Component } from "react";
 import { InteractiveForceGraph, ForceGraphNode, ForceGraphLink, ForceGraphArrowLink } from 'react-vis-force';
+import DiscreteColorLegend from 'react-vis/dist/legends/discrete-color-legend';
 import axios from 'axios'
+
+const ITEMS = [
+  {title: 'Your Community', color: "blue"},
+  {title: '1st Closest Community', color: "green"},
+  {title: '2nd Closest Community', color: "red"},
+  {title: '3rd Closest Community', color: "yellow"},
+  {title: '4th Closest Community', color: "orange"},
+  {title: '5th Closest Community', color: "purple"},
+  {title: '6th Closest Community', color: "pink"},
+  {title: '7th Closest Community', color: "brown"},
+  {title: 'All Other Communities', color: "black"}
+]
 
 export default class Home extends Component {
 
@@ -48,8 +61,14 @@ export default class Home extends Component {
 
         const myStyle = {
           position: "absolute",
-          left: '500px',
-          top: '90px'
+          left: '430px',
+          top: '80px'
+        }
+
+        const legendStyle = {
+          position: "absolute",
+          left: '1125px',
+          top: '80px'
         }
 
 
@@ -80,7 +99,7 @@ export default class Home extends Component {
             </div>
             <div className="rounded-md shadow-lg w-1/3 bg-white">
                 <div className="p-4">
-                  <h3 className="font-bold text-2xl mb-2">Immunity in Community: {network_and_community_data[9]}%</h3>
+                  <h3 className="font-bold text-2xl mb-2">Immunity In Community: {network_and_community_data[9]}%</h3>
                   <h3 className="text-2x1 mb-2">({network_and_community_data[5]} out of {network_and_community_data[3]} immune to COVID-19)</h3>
                 </div>
             </div>  
@@ -88,7 +107,7 @@ export default class Home extends Component {
                     <InteractiveForceGraph
                     labelAttr="label"
                     zoom
-                    simulationOptions={{height: 500, width: 700, animate: true, strength: {collide: 0.05} }}
+                    simulationOptions={{height: 500, width: 675, animate: true, strength: {collide: 0.05} }}
                     zoomOptions={{minScale: 0.25, maxScale: 5}}
                     highlightDependencies>
                  
@@ -129,6 +148,9 @@ export default class Home extends Component {
                     ))} 
       
           </InteractiveForceGraph>
+          </h>
+          <h style={legendStyle}>
+          <DiscreteColorLegend height={150} width={150} items={ITEMS} />;
           </h>
           
           </div>
