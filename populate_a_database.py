@@ -7,7 +7,7 @@ client = pymongo.MongoClient("localhost", 27017)
 db = client["team-y-nots"]
 table = db["people"]
 
-f = open("/Users/ac186f/Documents/graph_1.kml", "r")
+f = open("/Users/jt2608/Documents/team-y-nots/graph_1.kml", "r")
 firstLine = f.readline()
 split = firstLine[1:-2]
 numOfCharacters = int(split)
