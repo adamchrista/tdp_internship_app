@@ -212,6 +212,8 @@ databaseRoutes.route('/update/:id').post(function(req, res) {
         if (!person)
             res.status(404).send("data is not found");
         else
+            person.company_id = req.body.company_id;
+            person.password = req.body.password;
             person.first_name = req.body.first_name;
             person.last_name = req.body.last_name;
             person.phone = req.body.phone;
@@ -228,16 +230,7 @@ databaseRoutes.route('/update/:id').post(function(req, res) {
     });
 });
 
-/*databaseRoutes.route('/add').post(function(req, res) {
-    let person = new Person(req.body);
-    person.save()
-        .then(person => {
-            res.status(200).json({'person': 'person added successfully'});
-        })
-        .catch(err => {
-            res.status(400).send('adding new todo failed');
-        });
-});*/
+
 
 app.use('/team-y-nots', databaseRoutes);
 
@@ -245,84 +238,3 @@ app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);
 });
 
-
-
-/*
-var splitData = pythonOutput;
-            splitData = splitData.split('|');
-            var communityData = splitData[0];
-            var edgeData = splitData[1];
-            var networkAndCommunityData = splitData[2];
-
-            var nodes = [];
-            var edges = [];
-
-            var splitCommunitiesAndNodes = communityData.substring(0, communityData.length - 1);
-            splitCommunitiesAndNodes = splitCommunitiesAndNodes.split(',');
-
-            var splitEdgeData = edgeData.substring(0, edgeData.length - 1);
-            splitEdgeData = splitEdgeData.split(',');
-
-            for (var i = 0; i < splitCommunitiesAndNodes.length; i+=3)
-            {
-              var curr_data = splitCommunitiesAndNodes[i].slice(2, -1);
-              var node = {"id": curr_data, "label": curr_data,
-              "title": curr_data, "shape": "dot", "fill": splitCommunitiesAndNodes[i+1].slice(1),
-              "radius": splitCommunitiesAndNodes[i+2].slice(1)
-                };
-
-              nodes.push(node);
-            }
-           
-            graph["nodes"] = graph["nodes"].concat(nodes);
-
-            for (var i = 0; i < splitEdgeData.length; i += 2)
-            {
-              var edgeOne = splitEdgeData[i].slice(2, -1);
-              var edgeTwo = splitEdgeData[i+1].slice(2, -1);
-
-              if (i + 1 == splitEdgeData.length - 1)
-              {
-                  edgeTwo = splitEdgeData[i+1].slice(2, -2);
-              }
-
-              var edge = {"source": edgeOne, "target": edgeTwo};
-              edges.push(edge);
-           }
-
-           graph["edges"] = graph["edges"].concat(edges); 
-           
-           
-
-           colors = [
-               "blue", "green", "red", "yellow", "orange", "purple", "pink", "brown", "black", "indigo", "scarlet"
-             ];
-
-           graph["list_of_colors"] = graph["list_of_colors"].concat(colors); 
-
-           
-           var splitNetworkAndCommunityData = networkAndCommunityData.substring(1, networkAndCommunityData.length - 3);
-           splitNetworkAndCommunityData = splitNetworkAndCommunityData.split(',');
-           
-           var networkDiagnosedPercentage = parseFloat(splitNetworkAndCommunityData[1]) / parseFloat(splitNetworkAndCommunityData[0]);
-           var networkRecoveredPercentage = parseFloat(splitNetworkAndCommunityData[2]) / parseFloat(splitNetworkAndCommunityData[0]);
-           var communityDiagnosedPercentage = parseFloat(splitNetworkAndCommunityData[4]) / parseFloat(splitNetworkAndCommunityData[3]);
-           var communityRecoveredPercentage = parseFloat(splitNetworkAndCommunityData[5]) / parseFloat(splitNetworkAndCommunityData[3]);
-           splitNetworkAndCommunityData.push((networkDiagnosedPercentage * 100).toPrecision(3));
-           splitNetworkAndCommunityData.push((networkRecoveredPercentage * 100).toPrecision(3));
-           splitNetworkAndCommunityData.push((communityDiagnosedPercentage * 100).toPrecision(3));
-           splitNetworkAndCommunityData.push((communityRecoveredPercentage * 100).toPrecision(3));
-
-           splitNetworkAndCommunityData[0] = parseFloat(splitNetworkAndCommunityData[0]);
-           splitNetworkAndCommunityData[1] = parseFloat(splitNetworkAndCommunityData[1]);
-           splitNetworkAndCommunityData[2] = parseFloat(splitNetworkAndCommunityData[2]);
-           splitNetworkAndCommunityData[3] = parseFloat(splitNetworkAndCommunityData[3]);
-           splitNetworkAndCommunityData[4] = parseFloat(splitNetworkAndCommunityData[4]);
-           splitNetworkAndCommunityData[5] = parseFloat(splitNetworkAndCommunityData[5]);
-           
-           graph["full_network_and_community_data"] = graph["full_network_and_community_data"].concat(splitNetworkAndCommunityData);
-           //console.log(edges);
-           //console.log(nodes);
-
-           res.send(graph);
-*/

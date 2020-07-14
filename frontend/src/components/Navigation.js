@@ -9,6 +9,7 @@ export class Navigation extends React.Component{
                 <a href="home" className="ml-4 px-3 py-2 hover:bg-gray-100 rounded-md">Home</a>
                 <a href="profile" className="ml-4 px-3 py-2 hover:bg-gray-100 rounded-md">Profile</a>
                 <a href="about" className="ml-4 px-3 py-2 hover:bg-gray-100 rounded-md">About</a>
+                <a href="register" className="ml-4 px-3 py-2 hover:bg-gray-100 rounded-md">Register</a>
             </div>
         </div>
         );

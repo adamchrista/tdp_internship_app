@@ -3,11 +3,241 @@ import {
   Card, Button, CardImg, CardTitle, CardText, CardGroup,
   CardSubtitle, CardBody, Row, Col
 } from 'reactstrap';
+import axios from "axios";
 
 
-// const Profile = () => {
+
+
+
 export class Profile extends React.Component {
-  render() {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      company_id: '',
+      password: '',
+      first_name: '',
+      last_name: '',
+      email: '',
+      phone: '',
+      diagnosed_with_covid: false,
+      recovered_from_covid: false,
+      list_of_ids_exposed: [],
+    }
+
+    this.handleOnChangeCompanyId = this.handleOnChangeCompanyId.bind(this);
+    this.handleOnChangePassword = this.handleOnChangePassword.bind(this);
+    this.handleOnChangeFirstName = this.handleOnChangeFirstName.bind(this);
+    this.handleOnChangeLastName = this.handleOnChangeLastName.bind(this);
+    this.handleOnChangeEmail = this.handleOnChangeEmail.bind(this);
+    this.handleOnChangePhone = this.handleOnChangePhone.bind(this);
+    this.handleOnChangeDiagnosedWithCovid = this.handleOnChangeDiagnosedWithCovid.bind(this);
+    this.handleOnChangeRecoveredFromCovid = this.handleOnChangeRecoveredFromCovid.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    axios.get('http://localhost:4000/team-y-nots/profile/'+this.props.match.params.id)
+      .then(response => {
+        this.setState ({
+          company_id: response.data.company_id,
+          password: response.data.password,
+          first_name: response.data.first_name,
+          last_name: response.data.last_name,
+          email: response.data.email,
+          phone: response.data.phone,
+          diagnosed_with_covid: response.data.diagnosed_with_covid,
+          recovered_from_covid: response.data.recovered_from_covid,
+          list_of_ids_exposed: response.data.list_of_ids_exposed,
+
+        })
+      })
+      .catch(function(err) {
+        console.log(err);
+      })
+  }
+
+  handleOnChangeCompanyId = e => {
+    this.setState ({
+        company_id: e.target.value
+    });
+};
+
+handleOnChangePassword = e => {
+    this.setState ({
+        password: e.target.value
+    });
+};
+
+handleOnChangeFirstName = e => {
+    this.setState ({
+        first_name: e.target.value
+    });
+};
+
+handleOnChangeLastName = e => {
+    this.setState ({
+        last_name: e.target.value
+    });
+};
+
+handleOnChangeEmail = e => {
+    this.setState ({
+        email: e.target.value
+    });
+};
+
+handleOnChangePhone = e => {
+    this.setState ({
+        phone: e.target.value
+    });
+};
+
+handleOnChangeDiagnosedWithCovid = e => {    
+    this.setState(prevState => ({
+        diagnosed_with_covid: !prevState.diagnosed_with_covid
+      }));   
+};
+
+handleOnChangeRecoveredFromCovid = e => {
+    this.setState(prevState => ({
+        recovered_from_covid: !prevState.recovered_from_covid
+      }));
+};
+
+handleAddContact = () => {
+    this.setState({
+        list_of_ids_exposed: this.state.list_of_ids_exposed.concat([""])
+    });
+};
+
+handleContactNameChange = index => evt => {
+    const newContacts = this.state.list_of_ids_exposed.map((contact, cindex) => {
+        if (index !== cindex) return contact;
+        let id = evt.target.value;
+        return id;
+    });
+
+    this.setState({list_of_ids_exposed: newContacts});
+}
+
+onSubmit(e) {
+        
+
+  const obj = {
+      company_id: this.state.company_id,
+      password: this.state.password,
+      first_name: this.state.first_name,
+      last_name: this.state.last_name,
+      email: this.state.email,
+      phone: this.state.phone,
+      diagnosed_with_covid: this.state.diagnosed_with_covid,
+      recovered_from_covid: this.state.recovered_from_covid,
+      list_of_ids_exposed: this.state.list_of_ids_exposed,
+  };
+  
+  axios.post('http://localhost:4000/team-y-nots/update/'+this.props.match.params.id, obj)
+      .then(res => res.status);
+  
+  this.props.history.push('/home/'+this.props.match.params.id);    
+}
+
+
+
+
+render() {
+
+
+  const rightBlocks = {
+      position: "absolute",
+      left: "660px",
+      right: "0px",
+      bottom: "415px"
+  }
+
+  const diagnosedCheckbox = {
+      position: "absolute",
+      left: "660px",
+      bottom: "360px"
+  }
+
+  const recoveredCheckbox = {
+      position: "absolute",
+      left: "660px",
+      bottom: "320px"
+  }
+
+  const registerButton = {
+      position: "absolute",
+      left: "660px",
+      bottom: "250px"
+
+  }
+
+
+
+  return (
+      <form onSubmit={this.onSubmit}>
+        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+            <div class="mb-2">
+              <label class="block text-grey-darker text-sm font-bold mb-2" for="Company ID">Company ID</label>
+              <input class="shadow appearance-none border rounded w-1/2 py-2 px-3 text-grey-darker" id="Company ID" type="text" onChange={this.handleOnChangeCompanyId} value={this.state.company_id}></input>
+            </div>
+            <div class="mb-2">
+              <label class="block text-grey-darker text-sm font-bold mb-2" for="password">Password</label>
+              <input class="shadow appearance-none border border-red rounded w-1/2 py-2 px-3 text-grey-darker mb-3" id="password" type="password" onChange={this.handleOnChangePassword} value={this.state.password}></input>
+              <p class="text-red text-xs italic">Please choose a password.</p>
+            </div>
+            <div class="mb-2">
+              <label class="block text-grey-darker text-sm font-bold mb-2" for="First Name">First Name</label>
+              <input class="shadow appearance-none border border-red rounded w-1/2 py-2 px-3 text-grey-darker mb-3" id="First Name" type="text" onChange={this.handleOnChangeFirstName} value={this.state.first_name}></input>
+            </div>
+            <div class="mb-2">
+              <label class="block text-grey-darker text-sm font-bold mb-2" for="Last Name">Last Name</label>
+              <input class="shadow appearance-none border border-red rounded w-1/2 py-2 px-3 text-grey-darker mb-3" id="Last Name" type="text" onChange={this.handleOnChangeLastName} value={this.state.last_name}></input>
+            </div>
+            <div class="mb-2">
+              <label class="block text-grey-darker text-sm font-bold mb-2" for="Email">Email</label>
+              <input class="shadow appearance-none border border-red rounded w-1/2 py-2 px-3 text-grey-darker mb-3" id="Email" type="text" onChange={this.handleOnChangeEmail} value={this.state.email}></input>
+            </div>
+            <div class="mb-2" style={rightBlocks}>
+              <label class="block text-grey-darker text-sm font-bold mb-2" for="Phone">Phone</label>
+              <input class="shadow appearance-none border border-red rounded w-1/2 py-2 px-3 text-grey-darker mb-3" id="Phone" type="text" onChange={this.handleOnChangePhone} value={this.state.phone}></input>
+            </div>
+            <div class="mb-2" style={diagnosedCheckbox}>
+              <label for="DiagnosedWithCovid">Have You Been Diagnosed With COVID-19?</label>
+              <input id="DiagnosedWithCovid" type="checkbox" onChange={this.handleOnChangeDiagnosedWithCovid} checked={this.state.diagnosed_with_covid}></input>
+            </div>
+            <div class="mb-2" style={recoveredCheckbox}>
+              <label for="RecoveredFromCovid">Are You Immune To Or Recovered From COVID-19?</label>
+              <input  id="RecoveredFromCovid" type="checkbox" onChange={this.handleOnChangeRecoveredFromCovid} checked={this.state.recovered_from_covid}></input>
+            </div>
+            {
+                this.state.list_of_ids_exposed.map((contact, index) => (
+                    <div className="contact">
+                        <input type="text" placeholder="Contact ID" value={contact} onChange={this.handleContactNameChange(index)}/>
+                      </div>
+                ))
+            }
+
+            <button type="button" onClick={this.handleAddContact}>Add Contact</button>
+          
+             
+
+            <div class="flex items-center justify-between" style={registerButton}>
+              <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded" type="button" onClick={this.onSubmit}>Update</button>               
+            </div>                 
+            
+            
+        </div>
+        
+      </form>  
+    );
+}
+
+ /* render() {
+
     return (
       <div class="w-1/3 p-2 max-w-sm lg:max-w-full lg:flex mt-8">
         <div class="h-12 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden">
@@ -28,7 +258,7 @@ export class Profile extends React.Component {
         </div>
       </div>
     );
-  };
+  };*/
 }
 
 export default Profile;
