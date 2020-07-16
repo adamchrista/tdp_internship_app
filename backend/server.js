@@ -85,9 +85,11 @@ databaseRoutes.route('/home/:id').get(function(req, res) {
     Person.findById(id, function(err, person) {
             //console.log(person);
             console.log(id);
+            console.log("HELLO HEY")
             var middleJSON = JSON.stringify(person);
             middleJSON = JSON.parse(middleJSON);
             var company_id = middleJSON['company_id'].toString();
+            console.log(middleJSON)
             const pythonProcess = spawn('python',["do_gn_on_id.py", company_id]);
             pythonProcess.stdout.on('data', (data_received_from_python) => {
             
