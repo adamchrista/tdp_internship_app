@@ -5,7 +5,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const databaseRoutes = express.Router();
 const spawn = require("child_process").spawn;
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
 const PORT = 4000;
 
 let Person = require('./person.model');
@@ -13,7 +13,7 @@ let Person = require('./person.model');
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://127.0.0.1:27017/team-y-nots', { useNewUrlParser: true });
+mongoose.connect('mongodb://mongo:27017/team-y-nots', { useNewUrlParser: true });
 
 const connection = mongoose.connection;
 
@@ -89,16 +89,25 @@ databaseRoutes.route('/home/:id').get(function(req, res) {
             var middleJSON = JSON.stringify(person);
             middleJSON = JSON.parse(middleJSON);
             var company_id = middleJSON['company_id'].toString();
-            console.log(middleJSON)
+            console.log(middleJSON);
+            console.log(process.env.PATH);
+            console.log(process.cwd());
+
+            const testFolder = process.cwd();
+            const fs = require('fs');
+
+            fs.readdir(testFolder, (err, files) => {
+                files.forEach(file => {
+                console.log(file);
+                 });
+            });
+            
             const pythonProcess = spawn('python',["do_gn_on_id.py", company_id]);
             pythonProcess.stdout.on('data', (data_received_from_python) => {
             
             pythonOutput = data_received_from_python.toString();
 
             console.log(pythonOutput);
-
-            
-            
 
             var graph = {
                 nodes: [],
@@ -143,10 +152,6 @@ databaseRoutes.route('/home/:id').get(function(req, res) {
                 var edgeOne = splitEdgeData[i].slice(2, -1);
                 var edgeTwo = splitEdgeData[i+1].slice(2, -1);
 
-                /*if (i + 1 == splitEdgeData.length - 1)
-                {
-                    edgeTwo = splitEdgeData[i+1].slice(2, -2);
-                }*/
 
                 var edge = {"source": edgeOne, "target": edgeTwo};
                 edges.push(edge);
@@ -169,7 +174,7 @@ databaseRoutes.route('/home/:id').get(function(req, res) {
                 graph["list_of_colors"] = graph["list_of_colors"].concat(colors); 
 
                 
-                var splitNetworkAndCommunityData = networkAndCommunityData.substring(1, networkAndCommunityData.length - 3);
+                var splitNetworkAndCommunityData = networkAndCommunityData.substring(1, networkAndCommunityData.length - 2);
                 splitNetworkAndCommunityData = splitNetworkAndCommunityData.split(',');
                 
                 var networkDiagnosedPercentage = parseFloat(splitNetworkAndCommunityData[1]) / parseFloat(splitNetworkAndCommunityData[0]);
@@ -187,10 +192,17 @@ databaseRoutes.route('/home/:id').get(function(req, res) {
                 splitNetworkAndCommunityData[3] = parseFloat(splitNetworkAndCommunityData[3]);
                 splitNetworkAndCommunityData[4] = parseFloat(splitNetworkAndCommunityData[4]);
                 splitNetworkAndCommunityData[5] = parseFloat(splitNetworkAndCommunityData[5]);
+
+                for (var i = 0; i < splitNetworkAndCommunityData.length; i++)
+                {
+                    splitNetworkAndCommunityData[i] = parseFloat(splitNetworkAndCommunityData[i]);
+                    if (Number.isNaN(splitNetworkAndCommunityData[i]) == true)
+                    {
+                        splitNetworkAndCommunityData[i] = 0;
+                    }
+                }
                 
                 graph["full_network_and_community_data"] = graph["full_network_and_community_data"].concat(splitNetworkAndCommunityData);
-                //console.log(edges);
-                //console.log(nodes);
 
                 res.send(graph);
             }

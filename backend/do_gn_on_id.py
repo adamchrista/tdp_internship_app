@@ -1,13 +1,11 @@
 import networkx as nx
 from community import community_louvain
 import pymongo
-import string
-import random
 import sys
 
 trial_root = sys.argv[1]
 
-client = pymongo.MongoClient("localhost", 27017)
+client = pymongo.MongoClient("mongo", 27017)
 db = client["team-y-nots"]
 table = db["people"]
 
@@ -101,7 +99,7 @@ list_of_network_and_community_data.append(network_is_diagnosed_with_covid)
 list_of_network_and_community_data.append(network_is_recovered_from_covid)
 list_of_network_and_community_data.append(community_count)
 list_of_network_and_community_data.append(community_is_diagnosed_with_covid)
-list_of_network_and_community_data.append(community_is_recovered_from_covid)                
+list_of_network_and_community_data.append(community_is_recovered_from_covid)   
 
 print(str(all_key_values) +'|'+ str(list_of_edges) + '|' + str(list_of_network_and_community_data))
 sys.stdout.flush()

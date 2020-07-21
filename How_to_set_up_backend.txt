@@ -39,6 +39,11 @@ graph_1.kml
 -The result should be a page that has a good amount of data on it. Congrats you've got all the data we need for
 our project!!
 
+HOW TO RUN THE DOCKER PROJECT:
+1. Download Docker Desktop for Windows. Make sure you can run the command $ docker run hello-world
+2. Run the command $ docker-compose up --build
+3. That's it!
+
 
 
 
